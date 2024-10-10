@@ -1,6 +1,19 @@
 <div class="w-full h-dvh flex flex-col justify-center items-center bg-gray-950 gap-5">
+  <button
+    type="button"
+    (click)="connect()"
+    class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mb-10"
+    [ngClass]="{ 'hidden': isArduinoConnected }"
+  >
+    Connect
+  </button>
 
-  <button type="button" (click)="connect()" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Connect</button>
-
+  <h1>
+    @if (data.isSatelliteConnected) { 
+    <span class="text-green-400 font-bold text-2xl">Connected to satellite</span>
+    } @else {
+    <span class="text-white font-bold text-2xl animate-pulse">Waiting for satellite... </span>
+    }
+  </h1>
   <app-sos-view [data]="data"></app-sos-view>
 </div>

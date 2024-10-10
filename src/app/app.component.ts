@@ -18,8 +18,10 @@ export class AppComponent {
   serial: NgxSerial;
   data: Data = {
     satelliteAngle: 0,
-    signalPower: 0,
+    isSatelliteConnected: false,
+    strength: 0,
   };
+  isArduinoConnected = false;
 
   constructor() {
     this.serial = new NgxSerial(this.dataHandler.bind(this));
@@ -30,12 +32,13 @@ export class AppComponent {
   }
 
   private parseData(data: string): Data {
-    const regex = /signalPower:\s*(-?\d+(\.\d+)?)\s+satelliteAngle:\s*(-?\d+(\.\d+)?)/;
+    const regex = /signalPower:\s*(-?\d+(\.\d+)?)\s+satelliteAngle:\s*(-?\d+(\.\d+)?)\s+strength:\s*(\d+)/;
     const match = data.match(regex);
     if (match) {
       return {
-        signalPower: parseFloat(match[1]),
+        isSatelliteConnected: parseFloat(match[1]) > 875,
         satelliteAngle: parseFloat(match[3]),
+        strength: parseInt(match[5]),
       };
     } else {
       throw new Error("Invalid data format");
@@ -43,8 +46,12 @@ export class AppComponent {
   }
 
   private dataHandler(data: string) {
-    if (data === undefined || typeof data !== "string") return;
+    if (data === undefined || typeof data !== "string") {
+      this.isArduinoConnected = false;
+      return;
+    };
 
+    this.isArduinoConnected = true;
     const newData = this.parseData(data);
     if (newData != this.data) this.data = newData;
   }

@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, input, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, effect, ElementRef, input, isDevMode, ViewChild } from "@angular/core";
 import { Data } from "../data.type";
 
 @Component({
@@ -10,20 +10,18 @@ import { Data } from "../data.type";
 })
 export class SosViewComponent {
   data = input<Data>();
-  previousData: Data = { satelliteAngle: 0, signalPower: 0 };
+  previousAngle: number = 180;
+  transitionDuration: number = 500;
   @ViewChild("satellite") satellite!: ElementRef;
   @ViewChild("orbit") orbit!: ElementRef;
 
   constructor() {
     effect(() => {
-      console.log(this.data());
-      this.animateOrbitTransition(this.previousData.satelliteAngle, this.data()!.satelliteAngle, 1000);
-      this.previousData = this.data()!;
+      if (!this.data() || !this.data()?.isSatelliteConnected) return;
+      isDevMode() && console.log(this.data());
+      this.animateOrbitTransition(this.previousAngle, this.data()!.satelliteAngle, this.transitionDuration);
+      this.previousAngle = this.data()!.satelliteAngle;
     });
-
-    // setTimeout(() => {
-    //   this.animateOrbitTransition(0, 50, 1000);
-    // }, 1000);
   }
 
   private moveAroundOrbit(angle: number) {

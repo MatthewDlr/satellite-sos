@@ -1,4 +1,5 @@
 export type Data = {
   satelliteAngle: number;
-  signalPower: number;
+  isSatelliteConnected: boolean;
+  strength: number;
 };

@@ -1,5 +1,7 @@
 <div class="flex h-80 w-[50rem] border-2 rounded-md border-white overflow-hidden relative">
   <div class="absolute inset-0 flex justify-center isolate">
+    @if (data()?.isSatelliteConnected) {
+    <!--  Satellite  -->
     <svg
       #satellite
       width="24"
@@ -20,6 +22,7 @@
         fill="white"
       />
     </svg>
+    }
     <div
       #orbit
       class="size-[40rem] border-[10px] border-gray-800 rounded-full absolute top-12 z-10"
