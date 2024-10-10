@@ -46,6 +46,6 @@ export class AppComponent {
     if (data === undefined || typeof data !== "string") return;
 
     const newData = this.parseData(data);
-    if (newData !== this.data) this.data = newData;
+    if (newData != this.data) this.data = newData;
   }
 }
