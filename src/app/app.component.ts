@@ -19,24 +19,14 @@ export class AppComponent {
   data: Data = {
     satelliteAngle: 0,
     isSatelliteConnected: false,
-    strength: 0,
     motorAngle: 0,
   };
   isArduinoConnected = false;
   minLight: number | undefined;
+  port: any;
 
   constructor() {
     this.serial = new NgxSerial(this.dataHandler.bind(this));
-  }
-
-  public async connect() {
-    try {
-      await this.serial.connect(this.dataHandler.bind(this));
-      this.isArduinoConnected = true;
-    } catch (error) {
-      isDevMode() && console.error(error);
-      this.isArduinoConnected = false;
-    }
   }
 
   private dataHandler(data: string) {
@@ -46,21 +36,36 @@ export class AppComponent {
     if (newData != this.data) this.data = newData;
   }
 
-  private parseData(data: string): Data {
-    console.log(data);
-    const regex = /signalPower:(\d+(\.\d+)?)\s+satelliteAngle:(\d+(\.\d+)?)\s+strength:(\d+)\s+motorAngle:(\d+(\.\d+)?)/;
-    const match = data.match(regex);
-    if (match) {
-      if (this.minLight === undefined) this.minLight = parseFloat(match[1]) * 1.05;
-      console.log(this.minLight);
-      return {
-        isSatelliteConnected: parseFloat(match[1]) > this.minLight,
-        satelliteAngle: parseFloat(match[3]),
-        strength: parseFloat(match[5]),
-        motorAngle: parseFloat(match[6]),
-      };
-    } else {
-      throw new Error("Invalid data format");
+  public connect() {
+    if (!this.port) {
+      this.serial.connect((port: any) => {
+        this.port = port;
+      });
+      this.isArduinoConnected = true;
     }
+  }
+
+  public close() {
+    if (this.port)
+      this.serial.close((port: any) => {
+        this.port = port;
+      });
+  }
+
+  private parseData(data: string): Data {
+      console.log(data);
+      const regex = /signalPower:(-?\d+(\.\d+)?)\s+satelliteAngle:(-?\d+(\.\d+)?)\s+motorAngle:(-?\d+(\.\d+)?)/;
+      const match = data.match(regex);
+      if (match) {
+        if (this.minLight === undefined) this.minLight = parseFloat(match[1]) * 1.05;
+        console.log(this.minLight);
+        return {
+          isSatelliteConnected: parseFloat(match[1]) > this.minLight,
+          satelliteAngle: parseFloat(match[3]),
+          motorAngle: parseFloat(match[5]),
+        };
+      } else {
+        throw new Error("Invalid data format");
+      }
   }
 }
