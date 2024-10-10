@@ -25,14 +25,30 @@
     }
     <div
       #orbit
-      class="size-[40rem] border-[10px] border-gray-800 rounded-full absolute top-12 z-10"
+      class="size-[40rem] border-2 border-gray-800 rounded-full absolute top-12 z-10"
     ></div>
   </div>
 
   <!-- Globe -->
   <div class="absolute inset-0 flex justify-center isolate top-20">
-    <div class="bg-blue-500 rounded-full size-8 absolute top-32"></div>
-    <div class="bg-blue-500 rounded-full size-8 absolute top-32 ping"></div>
+    <div class="absolute inset-0 flex justify-center">
+      <div class="bg-blue-500 rounded-full size-8 absolute top-32 z-20"></div>
+      <svg
+        #humanView
+        width="40"
+        height="34"
+        viewBox="0 0 40 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-40 -top-2.5 absolute z-10 origin-bottom transform ease-in-out duration-500"
+      >
+        <path
+          d="M17.5 31.7367C19 33.5 21 33.5 22.5 31.7367L39.2385 8.07636C39.7005 7.42332 39.7468 6.54404 39.2059 5.9547C32.4019 -1.45858 6.51389 -0.271718 0.721535 6.0053C0.206669 6.56324 0.277245 7.39182 0.715712 8.01161L17.5 31.7367Z"
+          fill="white"
+          class="fill-blue-400/30"
+        />
+      </svg>
+    </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

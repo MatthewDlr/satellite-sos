@@ -20,6 +20,7 @@ export class AppComponent {
     satelliteAngle: 0,
     isSatelliteConnected: false,
     strength: 0,
+    humanViewAngle: 0
   };
   isArduinoConnected = false;
 
@@ -32,13 +33,14 @@ export class AppComponent {
   }
 
   private parseData(data: string): Data {
-    const regex = /signalPower:\s*(-?\d+(\.\d+)?)\s+satelliteAngle:\s*(-?\d+(\.\d+)?)\s+strength:\s*(\d+)/;
+    const regex = /signalPower:\s*(-?\d+(\.\d+)?)\s+satelliteAngle:\s*(-?\d+(\.\d+)?)\s+strength:\s*(\d+)\s+?humanViewAngle:\s*(-?\d+(\.\d+)?)/;
     const match = data.match(regex);
     if (match) {
       return {
         isSatelliteConnected: parseFloat(match[1]) > 875,
         satelliteAngle: parseFloat(match[3]),
         strength: parseInt(match[5]),
+        humanViewAngle : parseFloat(match[7])
       };
     } else {
       throw new Error("Invalid data format");

@@ -14,12 +14,14 @@ export class SosViewComponent {
   transitionDuration: number = 500;
   @ViewChild("satellite") satellite!: ElementRef;
   @ViewChild("orbit") orbit!: ElementRef;
+  @ViewChild("humanView") humanView!: ElementRef;
 
   constructor() {
     effect(() => {
       if (!this.data() || !this.data()?.isSatelliteConnected) return;
       isDevMode() && console.log(this.data());
       this.animateOrbitTransition(this.previousAngle, this.data()!.satelliteAngle, this.transitionDuration);
+      this.rotateHumanView(this.data()!.humanViewAngle);
       this.previousAngle = this.data()!.satelliteAngle;
     });
   }
@@ -56,5 +58,9 @@ export class SosViewComponent {
 
   private easeInOut(t: number): number {
     return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+
+  private rotateHumanView(angle: number) {
+    this.humanView.nativeElement.style.transform = `rotate(${angle}deg)`;
   }
 }
