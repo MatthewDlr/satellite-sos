@@ -1,5 +1,8 @@
 # SatelliteSos
 
+![CleanShot 2024-10-10 at 14 43 01](https://github.com/user-attachments/assets/5de91f54-883d-4832-8b76-ad9956754d8c)
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
 
 ## Development server
