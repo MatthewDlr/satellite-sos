@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, ElementRef, input, isDevMode, ViewChild } from "@angular/core";
+import { Component, effect, ElementRef, input, isDevMode, ViewChild } from "@angular/core";
 import { Data } from "../data.type";
 
 @Component({
@@ -19,11 +19,14 @@ export class SosViewComponent {
   constructor() {
     effect(() => {
       if (!this.data() || !this.data()?.isSatelliteConnected) return;
-      isDevMode() && console.log(this.data());
-      this.animateOrbitTransition(this.previousAngle, this.data()!.satelliteAngle, this.transitionDuration);
-      this.rotateHumanView(this.data()!.humanViewAngle);
-      this.previousAngle = this.data()!.satelliteAngle;
+      this.rotateMotor(this.data()!.motorAngle);
     });
+
+    setInterval(() => {
+      if (!this.data() || !this.data()?.isSatelliteConnected) return;
+      this.animateOrbitTransition(this.previousAngle, this.data()!.satelliteAngle, this.transitionDuration);
+      this.previousAngle = this.data()!.satelliteAngle;
+    }, 500);
   }
 
   private moveAroundOrbit(angle: number) {
@@ -60,7 +63,7 @@ export class SosViewComponent {
     return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
   }
 
-  private rotateHumanView(angle: number) {
+  private rotateMotor(angle: number) {
     this.humanView.nativeElement.style.transform = `rotate(${angle}deg)`;
   }
 }
