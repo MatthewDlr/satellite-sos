@@ -3,6 +3,7 @@
 This is my attempt to reproduce Apple emergency SOS via satellite feature but better with a motor that actually moves the device toward the right direction. This is just a fun project from one of my classes and it is not meant to actually replace the real SOS feature in any way; I simply wanted to mimic the amazing UI that Apple's swift engineers have created.
 
 The app is made with Angular and the motor is controlled by an Arduino.
+See it live at: https://satellite.mdelarue.dev/
 
 ![CleanShot 2024-10-10 at 14 43 01](https://github.com/user-attachments/assets/5de91f54-883d-4832-8b76-ad9956754d8c)
 
