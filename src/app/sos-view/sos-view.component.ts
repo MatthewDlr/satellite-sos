@@ -10,25 +10,29 @@ import { Data } from "../data.type";
 })
 export class SosViewComponent {
   data = input<Data>();
-  previousAngle: number = 180;
+  previousAngle: number = 0;
   transitionDuration: number = 500;
 
   @ViewChild("satellite") satellite!: ElementRef;
   @ViewChild("orbit") orbit!: ElementRef;
-  @ViewChild("humanView") humanView!: ElementRef;
+  @ViewChild("sight") sight!: ElementRef;
   @ViewChild("globe") globe!: ElementRef;
 
   constructor() {
     effect(() => {
-      if (!this.data() || !this.data()?.isSatelliteConnected) return;
+      if (!this.data()) return;
+      if (!this.data()!.isSatelliteConnected) {
+        this.previousAngle = 0;
+      }
       this.rotateMotor(this.data()!.motorAngle);
     });
 
     setInterval(() => {
-      if (!this.data() || !this.data()?.isSatelliteConnected) return;
+      if (!this.data() || !this.data()?.isSatelliteConnected || this.data()?.satelliteAngle === 0) return;
+
       this.animateOrbitTransition(this.previousAngle, this.data()!.satelliteAngle, this.transitionDuration);
       this.previousAngle = this.data()!.satelliteAngle;
-    }, 500);
+    }, this.transitionDuration);
   }
 
   private moveAroundOrbit(angle: number) {
@@ -66,6 +70,6 @@ export class SosViewComponent {
   }
 
   private rotateMotor(angle: number) {
-    this.humanView.nativeElement.style.transform = `rotate(${angle}deg)`;
+    this.sight.nativeElement.style.transform = `rotate(${angle}deg)`;
   }
 }

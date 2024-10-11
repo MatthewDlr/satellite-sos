@@ -1,20 +1,29 @@
 <div class="w-full h-dvh flex flex-col justify-center items-center bg-gray-950 gap-5">
-  <button
-    type="button"
-    (click)="connect()"
-    class="rounded-full bg-white/25 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-500 mb-10 hover:scale-105 transition-transform duration-200"
-    [ngClass]="{ hidden: isArduinoConnected }"
-  >
-    Connect to Arduino
-  </button>
+  <div class="flex flex-col gap-3 mb-10">
+    <button
+      type="button"
+      (click)="connect()"
+      [ngClass]="{ invisible: isDemoMode }"
+      class="rounded-full bg-white/25 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-500 hover:scale-105 transition-transform duration-200"
+    >
+      Connect to Arduino
+    </button>
+
+    <p
+      (click)="toggleDemoMode()"
+      class="text-sm underline text-white text-center cursor-pointer hover:text-opacity-90 transition-colors"
+    >
+      @if (isDemoMode) { Disable Demo Mode } @else { Or enable Demo Mode }
+    </p>
+  </div>
 
   <h1>
-    @if (isArduinoConnected) { @if (data.isSatelliteConnected) {
-    <span class="text-green-400 font-bold text-2xl">Satellite found</span>
+    @if (port != undefined || isDemoMode) { @if (data.isSatelliteConnected) {
+    <span class="text-green-400 font-bold text-2xl">Satellite connected</span>
     } @else {
-    <span class="text-white font-bold text-2xl animate-pulse">Looking for satellite... </span>
+    <span class="text-white font-bold text-2xl animate-pulse">Searching for satellite... </span>
     } } @else {
-    <span class="text-white font-medium text-xl">No device connected</span>
+    <span class="text-white font-medium text-xl">No Arduino connected</span>
 
     }
   </h1>
