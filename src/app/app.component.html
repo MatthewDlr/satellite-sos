@@ -1,31 +1,37 @@
-<div class="w-full h-dvh flex flex-col justify-center items-center bg-gray-950 gap-5">
-  <div class="flex flex-col gap-3 mb-10">
-    <button
-      type="button"
-      (click)="connect()"
-      [ngClass]="{ invisible: isDemoMode }"
-      class="rounded-full bg-white/25 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-500 hover:scale-105 transition-transform duration-200"
-    >
-      Connect to Arduino
-    </button>
+<div class="w-full h-dvh flex flex-col items-center bg-gray-950 justify-between">
+  <section class="flex flex-col items-center gap-3 mt-40">
+    <div class="flex flex-col gap-3 mb-10">
+      <button
+        type="button"
+        (click)="connect()"
+        [ngClass]="{ invisible: isDemoMode }"
+        class="rounded-full bg-white/25 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-500 hover:scale-105 transition-transform duration-200"
+      >
+        Connect to Arduino
+      </button>
 
-    <p
-      (click)="toggleDemoMode()"
-      class="text-sm underline text-white text-center cursor-pointer hover:text-opacity-90 transition-colors"
-    >
-      @if (isDemoMode) { Disable Demo Mode } @else { Or enable Demo Mode }
-    </p>
-  </div>
+      <p
+        (click)="toggleDemoMode()"
+        class="text-sm underline text-white text-center cursor-pointer hover:text-opacity-90 transition-colors"
+      >
+        @if (isDemoMode) { Disable Demo Mode } @else { Or enable Demo Mode }
+      </p>
+    </div>
 
-  <h1>
-    @if (port != undefined || isDemoMode) { @if (data.isSatelliteConnected) {
-    <span class="text-green-400 font-bold text-2xl">Satellite connected</span>
-    } @else {
-    <span class="text-white font-bold text-2xl animate-pulse">Searching for satellite... </span>
-    } } @else {
-    <span class="text-white font-medium text-xl">No Arduino connected</span>
+    <h1>
+      @if (port != undefined || isDemoMode) { @if (data.isSatelliteConnected) {
+      <span class="text-green-400 font-bold text-2xl">Satellite connected</span>
+      } @else {
+      <span class="text-white font-bold text-2xl animate-pulse">Searching for satellite... </span>
+      } } @else {
+      <span class="text-white/50 font-medium text-xl">No Arduino connected</span>
 
-    }
-  </h1>
-  <app-sos-view [data]="data"></app-sos-view>
+      }
+    </h1>
+  </section>
+
+  <app-sos-view
+    class="w-full scale-125 mb-10"
+    [data]="data"
+  ></app-sos-view>
 </div>
