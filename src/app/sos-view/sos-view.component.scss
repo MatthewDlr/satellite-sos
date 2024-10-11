@@ -1,9 +1,44 @@
 @keyframes ping {
-    75%, 100% {
-        transform: scale(8);
-        opacity: 0;
-    }
+  75%,
+  100% {
+    transform: scale(8);
+    opacity: 0;
+  }
 }
 .ping {
-    animation: ping 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: ping 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes moveAndFade {
+  0% {
+    transform: scale(2) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(25) translateY(-7px);
+    opacity: 0;
+  }
+}
+
+.move-and-fade {
+  animation: moveAndFade 5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes scaleBounce {
+  0% {
+    transform: scale(1);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  10% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.scale-bounce {
+  animation: scaleBounce 5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }

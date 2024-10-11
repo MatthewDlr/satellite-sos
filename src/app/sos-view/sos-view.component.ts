@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, input, isDevMode, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, effect, ElementRef, input, isDevMode, ViewChild } from "@angular/core";
 import { Data } from "../data.type";
 
 @Component({
@@ -12,9 +12,11 @@ export class SosViewComponent {
   data = input<Data>();
   previousAngle: number = 180;
   transitionDuration: number = 500;
+
   @ViewChild("satellite") satellite!: ElementRef;
   @ViewChild("orbit") orbit!: ElementRef;
   @ViewChild("humanView") humanView!: ElementRef;
+  @ViewChild("globe") globe!: ElementRef;
 
   constructor() {
     effect(() => {
